@@ -1,0 +1,7 @@
+lotwize <- read_excel("/Users/lyndseyhuss/Documents/MGSC_410/MGSC_410/Project1/lotwize_case.xlsx")
+library(readxl)        # For reading Excel files
+library(dplyr)         # For data manipulation
+library(rsample)       # For data splitting
+library(randomForest)  # For Random Forest model
+set.seed(410)
+lotwize <- read_excel("/Users/lyndseyhuss/Documents/MGSC_410/MGSC_410/Project1/lotwize_case.xlsx")

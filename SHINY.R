@@ -19,7 +19,7 @@ set.seed(410)
 library(readxl)
 
 # Specify the full path to the file
-lotwize <- read_excel("/Users/lyndseyhuss/Documents/MGSC_410/LyndseyHuss/lotwize_case copy.xlsx")
+lotwize <- read_excel("/Users/lyndseyhuss/Documents/MGSC_410/MGSC_410/Project1/lotwize_case.xlsx")
 
 # --------------------------- Initial Exploration ------------------
 # Get the dimensions of the dataset
