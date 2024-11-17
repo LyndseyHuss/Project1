@@ -7,7 +7,7 @@ library(readxl)        # For reading Excel files
 library(dplyr)         # For data manipulation
 library(rsample)       # For data splitting
 library(randomForest)  # For Random Forest model
-        # For GBM model
+library(shiny)
 
 # Set seed for reproducibility
 set.seed(410)

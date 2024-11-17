@@ -5,3 +5,64 @@ library(rsample)       # For data splitting
 library(randomForest)  # For Random Forest model
 set.seed(410)
 lotwize <- read_excel("/Users/lyndseyhuss/Documents/MGSC_410/MGSC_410/Project1/lotwize_case.xlsx")
+shinyApp(ui = ui, server = server)
+server <- function(input, output, session) {
+server <- function(input, output, session) {
+server <- function(input, output, session) {
+server <- function(input, output, session) {#
+  observeEvent(input$predict, {#
+    req(input$city, input$bathrooms, input$bedrooms, input$age, input$latitude, input$longitude)#
+    # Prepare user input data#
+    user_data <- data.frame(#
+      city = factor(input$city, levels = levels(lotwize$city)),#
+      bathrooms = as.numeric(input$bathrooms),#
+      bedrooms = as.numeric(input$bedrooms),#
+      age = as.numeric(input$age),#
+      latitude = as.numeric(input$latitude),#
+      longitude = as.numeric(input$longitude),#
+      homeType = factor(input$homeType, levels = levels(lotwize$homeType)),#
+      luxury = factor(input$luxury, levels = c(TRUE, FALSE)),#
+      sentiment_score = as.numeric(input$sentiment_score)#
+    )#
+    tryCatch({#
+      # Generate prediction#
+      prediction <- predict(avm_model, newdata = user_data)#
+      predicted_price <- exp(prediction)  # Revert log transformation#
+      output$prediction <- renderText(paste("Predicted Price: $", round(predicted_price, 2)))
+server <- function(input, output, session) {#
+  observeEvent(input$predict, {#
+    req(input$city, input$bathrooms, input$bedrooms, input$age, input$latitude, input$longitude)#
+    # Prepare user input data#
+    user_data <- data.frame(#
+      city = factor(input$city, levels = levels(lotwize$city)),#
+      bathrooms = as.numeric(input$bathrooms),#
+      bedrooms = as.numeric(input$bedrooms),#
+      age = as.numeric(input$age),#
+      latitude = as.numeric(input$latitude),#
+      longitude = as.numeric(input$longitude),#
+      homeType = factor(input$homeType, levels = levels(lotwize$homeType)),#
+      luxury = factor(input$luxury, levels = c(TRUE, FALSE)),#
+      sentiment_score = as.numeric(input$sentiment_score)#
+    )#
+    tryCatch({#
+      # Generate prediction#
+      prediction <- predict(avm_model, newdata = user_data)#
+      predicted_price <- exp(prediction)  # Revert log transformation#
+      output$prediction <- renderText(paste("Predicted Price: $", round(predicted_price, 2)))#
+      # Generate recommendations#
+      recommendations <- lotwize %>%#
+        filter(#
+          city == user_data$city,#
+          abs(price - predicted_price) <= 50000  # Adjust price range as needed#
+        ) %>%#
+        arrange(abs(price - predicted_price)) %>%#
+        head(5) %>%#
+        select(city, price, bathrooms, bedrooms, homeType, age)  # Columns to display#
+      output$recommendations <- renderTable(recommendations)#
+    }, error = function(e) {#
+      output$prediction <- renderText("An error occurred during prediction. Please check inputs.")#
+    })#
+  })#
+}
+shinyApp(ui = ui, server = server)
+library(shiny)
